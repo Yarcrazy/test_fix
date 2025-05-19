@@ -1,5 +1,6 @@
 How to run:
 1. Clone repository.  
+  ``git clone git@github.com:Yarcrazy/test_fix.git``
 2. Up docker:  
   ``docker compose up -d``
 3. Install dependencies:  
