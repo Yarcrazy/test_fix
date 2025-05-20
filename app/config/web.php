@@ -49,7 +49,8 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'calculate-bonus' => 'api/calculate',
+                'calculate-bonus'   => 'bonus/calculate',
+                'docs'              => 'site/docs',
             ],
         ],
     ],

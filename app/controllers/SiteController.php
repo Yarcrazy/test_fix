@@ -42,6 +42,19 @@ class SiteController extends Controller
     public function actions()
     {
         return [
+            'docs' => [
+                'class' => 'light\swagger\SwaggerAction',
+                'restUrl' => \yii\helpers\Url::to(['/site/api'], true),
+            ],
+            'api' => [
+                'class' => 'light\swagger\SwaggerApiAction',
+                //The scan directories, you should use real path there.
+                'scanDir' => [
+                    Yii::getAlias('@app/controllers'),
+                ],
+                //The security key
+                'api_key' => 'balbalbal',
+            ],
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
