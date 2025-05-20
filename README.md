@@ -9,3 +9,7 @@ How to run:
   ``docker exec -it app php app/yii migrate``
 5. Use:  
   POST **http://localhost:9234/calculate-bonus**
+
+Optionnally:
+1. Swagger documentation
+  **http://localhost:9234/docs**
