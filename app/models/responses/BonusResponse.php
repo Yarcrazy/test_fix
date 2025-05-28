@@ -5,7 +5,7 @@ namespace app\models\responses;
 readonly class BonusResponse
 {
     public function __construct(
-        public int $totalBonus,
+        public float $totalBonus,
         public array $appliedRules
     ) {}
 

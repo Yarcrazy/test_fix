@@ -13,7 +13,7 @@ readonly class RuleResponse
     {
         return [
             'rule' => $this->rule,
-            'bonus' => round($this->bonus, 2),
+            'bonus' => $this->bonus,
         ];
     }
 }

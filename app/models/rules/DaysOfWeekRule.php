@@ -15,9 +15,9 @@ class DaysOfWeekRule extends AbstractRule
             $this->ruleModel->conditions['days_of_week']
         )
             ? new RuleResponse(
-                    $this->ruleModel->name,
-                $amount * $this->ruleModel->conditions['bonus']
-                )
+                $this->ruleModel->name,
+                round($amount * $this->ruleModel->conditions['bonus'], 2)
+            )
             : new RuleResponse();
     }
 }

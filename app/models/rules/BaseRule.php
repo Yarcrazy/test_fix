@@ -12,7 +12,7 @@ class BaseRule extends AbstractRule
     {
         return new RuleResponse(
             $this->ruleModel->name,
-            $context->transactionAmount * $this->ruleModel->conditions['bonus']
+            round($context->transactionAmount * $this->ruleModel->conditions['bonus'], 2)
         );
     }
 }
