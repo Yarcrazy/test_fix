@@ -14,5 +14,5 @@ Optionnally:
 1. Swagger documentation
   **http://localhost:9234/docs**
 
-Run tests:
+Run tests:  
 ``docker exec -it app bash -c "cd app && ./vendor/bin/codecept run unit"``
