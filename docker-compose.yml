@@ -22,6 +22,20 @@ services:
     networks:
       - net
 
+  postgres_test:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5411:5432'
+    container_name: postgres_test
+    networks:
+      - net
+
   nginx:
     image: nginx:latest
     volumes:
