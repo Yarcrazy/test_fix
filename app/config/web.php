@@ -1,5 +1,8 @@
 <?php
 
+use app\models\repositories\RuleRepository;
+use app\models\services\BonusCalculator;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
@@ -56,6 +59,16 @@ $config = [
     ],
     'params' => $params,
 ];
+
+$container = \Yii::$container;
+
+$container->setSingletons([
+    BonusCalculator::class => function ($container) {
+        return new BonusCalculator($container->get(RuleRepository::class));
+    },
+    RuleRepository::class => RuleRepository::class,
+]);
+
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment

@@ -2,16 +2,12 @@
 
 namespace app\models\responses;
 
-class RuleResponse
+readonly class RuleResponse
 {
-    private string $rule;
-    private float $bonus;
-
-    public function __construct($rule, $bonus)
-    {
-        $this->rule = $rule;
-        $this->bonus = $bonus;
-    }
+    public function __construct(
+        public string $rule = '',
+        public float $bonus = 0
+    ) {}
 
     public function toArray(): array
     {

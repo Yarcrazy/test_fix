@@ -3,6 +3,7 @@
 namespace app\models\forms;
 
 use app\enums\Customer;
+use app\models\dto\CalculationContext;
 use yii\base\Model;
 
 class BonusForm extends Model
@@ -35,15 +36,12 @@ class BonusForm extends Model
         ];
     }
 
-    /**
-     * @return array customized attribute labels
-     */
-    public function attributeLabels(): array
+    public function toCalculationContext(): CalculationContext
     {
-        return [
-            'transaction_amount' => 'Transaction Amount',
-            'timestamp' => 'Transaction Date',
-            'customer_status' => 'Customer Status',
-        ];
+        return new CalculationContext(
+            transactionAmount: $this->transaction_amount,
+            timestamp: $this->timestamp,
+            customerStatus: $this->customer_status
+        );
     }
 }

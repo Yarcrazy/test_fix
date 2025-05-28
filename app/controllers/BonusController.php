@@ -3,15 +3,15 @@
 namespace app\controllers;
 
 use app\models\forms\BonusForm;
-use app\models\services\BonusService;
-use Yii;
+use app\models\services\BonusCalculator;
 use yii\filters\VerbFilter;
 use yii\rest\Controller;
+use yii\web\Request;
 use yii\web\Response;
 use OpenApi\Attributes as OA;
 
 #[OA\Info(
-    version: "1.0.0",
+    version: "1.1.0",
     title: "Bonus Calculation API",
     description: "API для расчета бонусов клиентов",
 )]
@@ -19,11 +19,12 @@ use OpenApi\Attributes as OA;
 
 class BonusController extends Controller
 {
-    private BonusService $bonusService;
-
-    public function __construct($id, $module, $config)
-    {
-        $this->bonusService = new BonusService();
+    public function __construct(
+        $id,
+        $module,
+        private BonusCalculator $calculator,
+        $config = []
+    ) {
         parent::__construct($id, $module, $config);
     }
 
@@ -37,12 +38,6 @@ class BonusController extends Controller
                 ],
             ],
         ];
-    }
-
-    public function beforeAction($action): bool
-    {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return parent::beforeAction($action);
     }
 
     #[OA\Post(
@@ -87,15 +82,16 @@ class BonusController extends Controller
         response: 422,
         description: "Validation error"
     )]
-    public function actionCalculate()
+    public function actionCalculate(Request $request): Response
     {
-        $model = new BonusForm();
-        $model->load(Yii::$app->request->post(), '');
-        if (!$model->validate()) {
-            Yii::$app->response->statusCode = 422;
-            return ['errors' => $model->errors];
+        $form = new BonusForm();
+        $form->load($request->post(), '');
+
+        if (!$form->validate()) {
+            return $this->asJson(['errors' => $form->errors]);
         }
 
-        return $this->bonusService->getBonusInfo($model);
+        $response = $this->calculator->calculate($form->toCalculationContext());
+        return $this->asJson($response->toArray());
     }
 }

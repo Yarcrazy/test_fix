@@ -3,20 +3,21 @@
 namespace app\models\rules;
 
 use app\models\AbstractRule;
+use app\models\dto\CalculationContext;
 use app\models\responses\RuleResponse;
 
 class StatusRule extends AbstractRule
 {
-    public function applyRule(): array
+    public function applyRule(float $amount, CalculationContext $context): RuleResponse
     {
         return in_array(
-            $this->bonusForm->customer_status,
+            $context->customerStatus,
             $this->ruleModel->conditions['customer_statuses']
         )
-            ? (new RuleResponse(
+            ? new RuleResponse(
                     $this->ruleModel->name,
-                    $this->bonusForm->transaction_amount * $this->ruleModel->conditions['bonus']
-                ))->toArray()
-            : [];
+                    $amount * $this->ruleModel->conditions['bonus']
+                )
+            : new RuleResponse();
     }
 }

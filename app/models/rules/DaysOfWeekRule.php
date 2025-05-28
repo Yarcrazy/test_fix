@@ -3,20 +3,21 @@
 namespace app\models\rules;
 
 use app\models\AbstractRule;
+use app\models\dto\CalculationContext;
 use app\models\responses\RuleResponse;
 
 class DaysOfWeekRule extends AbstractRule
 {
-    public function applyRule(): array
+    public function applyRule(float $amount, CalculationContext $context): RuleResponse
     {
         return in_array(
-            date('N', strtotime($this->bonusForm->timestamp)),
+            date('N', strtotime($context->timestamp)),
             $this->ruleModel->conditions['days_of_week']
         )
-            ? (new RuleResponse(
+            ? new RuleResponse(
                     $this->ruleModel->name,
-                    $this->bonusForm->transaction_amount * $this->ruleModel->conditions['bonus']
-                ))->toArray()
-            : [];
+                $amount * $this->ruleModel->conditions['bonus']
+                )
+            : new RuleResponse();
     }
 }
