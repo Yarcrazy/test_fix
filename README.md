@@ -1,3 +1,5 @@
+Task description is provided in the task.pdf file.
+
 How to run:
 1. Clone repository.  
   ``git clone git@github.com:Yarcrazy/test_fix.git``
